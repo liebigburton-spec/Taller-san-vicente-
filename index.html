@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taller San Vicente – Servicios Técnicos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro:    #0D0D0D;
+      --acero:    #1C2B3A;
+      --naranja:  #E85D04;
+      --naranja2: #F48C06;
+      --blanco:   #F5F5F5;
+      --gris:     #8A8A8A;
+      --gris-bg:  #F0F0F0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--blanco);
+      color: var(--negro);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6vw;
+      height: 64px;
+      background: var(--negro);
+      border-bottom: 2px solid var(--naranja);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--blanco);
+      letter-spacing: 2px;
+    }
+    .nav-logo span { color: var(--naranja); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--blanco);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--naranja); }
+    .nav-cta {
+      background: var(--naranja);
+      color: var(--negro) !important;
+      padding: 8px 18px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+    }
+    .nav-cta:hover { background: var(--naranja2); color: var(--negro) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--negro);
+      display: flex; align-items: center;
+      padding: 100px 6vw 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 55%; height: 100%;
+      background: linear-gradient(135deg, var(--acero) 0%, #0a1a26 100%);
+      clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 580px; }
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: 1rem;
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 9vw, 7rem);
+      color: var(--blanco);
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--naranja); }
+    .hero-desc {
+      color: #A0A0A0;
+      font-size: 1.05rem;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--naranja);
+      color: var(--negro);
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--naranja2); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid #444;
+      color: var(--blanco);
+      padding: 14px 28px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--naranja); color: var(--naranja); }
+
+    .hero-gear {
+      position: absolute; right: 6vw; top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(150px, 22vw, 320px);
+      opacity: 0.06;
+      z-index: 1;
+      animation: spin 30s linear infinite;
+      user-select: none;
+    }
+    @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--naranja);
+      padding: 28px 6vw;
+      display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      color: var(--negro);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.65);
+    }
+
+    /* ── SECCIÓN COMÚN ── */
+    section { padding: 80px 6vw; }
+    .section-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--naranja);
+      margin-bottom: .6rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--negro);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--gris);
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--gris-bg); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--blanco);
+      border-radius: 8px;
+      padding: 2rem;
+      border-top: 4px solid transparent;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .service-card:hover {
+      border-top-color: var(--naranja);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+    }
+    .service-icon {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .service-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      color: var(--negro);
+    }
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    /* ── POR QUÉ NOSOTROS ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .why-visual {
+      background: var(--acero);
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+      color: var(--blanco);
+    }
+    .why-visual .big-icon { font-size: 6rem; }
+    .why-visual p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--naranja);
+      margin-top: 1rem;
+      letter-spacing: 1px;
+    }
+    .why-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; }
+    .why-list li {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .why-check {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--naranja);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+    .why-list h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+    .why-list p { font-size: 0.85rem; color: var(--gris); }
+
+    /* ── PROCESO ── */
+    #proceso { background: var(--negro); }
+    #proceso .section-title { color: var(--blanco); }
+    #proceso .section-sub { color: #666; }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .step {
+      border-left: 3px solid var(--naranja);
+      padding-left: 1.5rem;
+    }
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--naranja);
+      line-height: 1;
+    }
+    .step h3 { color: var(--blanco); font-size: 1rem; margin: .4rem 0 .5rem; }
+    .step p { color: #666; font-size: 0.85rem; }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--gris-bg); }
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem;
+    }
+    .contact-info p { color: var(--gris); font-size: 0.9rem; margin-bottom: 2rem; }
+    .contact-item {
+      display: flex; gap: 1rem; align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .contact-icon {
+      width: 44px; height: 44px; min-width: 44px;
+      background: var(--negro);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .contact-item strong { display: block; font-size: 0.85rem; color: var(--negro); }
+    .contact-item span { font-size: 0.82rem; color: var(--gris); }
+
+    .contact-form {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    }
+    .contact-form h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--negro);
+      margin-bottom: .4rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #DDD;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--negro);
+      background: var(--blanco);
+      transition: border-color .2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--naranja); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .btn-form {
+      width: 100%;
+      background: var(--naranja);
+      color: var(--negro);
+      border: none;
+      padding: 13px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-form:hover { background: var(--naranja2); }
+
+    /* ── WHATSAPP FLOTANTE ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 999;
+      display: flex; align-items: center; gap: 10px;
+      background: #25D366;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .whatsapp-float:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.55);
+    }
+    .whatsapp-float svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--negro);
+      color: #555;
+      text-align: center;
+      padding: 2rem 6vw;
+      font-size: 0.82rem;
+      border-top: 1px solid #1a1a1a;
+    }
+    footer span { color: var(--naranja); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero::before { display: none; }
+      .hero { padding-top: 90px; }
+      .why-grid, .contact-wrapper { grid-template-columns: 1fr; }
+      .hero-gear { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Taller <span>San Vicente</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/59160204287" target="_blank" class="nav-cta">WhatsApp</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <p class="hero-eyebrow">⚙️ Servicios Técnicos Especializados</p>
+    <h1>TALLER<br><span>SAN</span><br>VICENTE</h1>
+    <p class="hero-desc">
+      Soluciones técnicas rápidas, confiables y a precio justo. Reparamos, mantenemos y revisamos tu equipo con profesionalismo y garantía.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/59160204287" target="_blank" class="btn-primary">
+        📲 Consultar por WhatsApp
+      </a>
+      <a href="#servicios" class="btn-outline">Ver servicios</a>
+    </div>
+  </div>
+  <div class="hero-gear" aria-hidden="true">⚙</div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Clientes atendidos</div></div>
+  <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Años de experiencia</div></div>
+  <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Clientes satisfechos</div></div>
+  <div class="stat"><div class="stat-num">24h</div><div class="stat-label">Tiempo de respuesta</div></div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <p class="section-eyebrow">Lo que hacemos</p>
+  <h2 class="section-title">Nuestros Servicios Técnicos</h2>
+  <p class="section-sub">Ofrecemos atención especializada para una amplia variedad de equipos y necesidades técnicas.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🔧</span>
+      <h3>Mantenimiento Preventivo</h3>
+      <p>Revisión periódica de tus equipos para evitar fallas costosas y prolongar su vida útil.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🛠️</span>
+      <h3>Reparación General</h3>
+      <p>Diagnóstico y reparación de equipos dañados con repuestos de calidad y garantía incluida.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">⚡</span>
+      <h3>Revisión Eléctrica</h3>
+      <p>Inspección y corrección de fallas eléctricas con seguridad y precisión técnica.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🔩</span>
+      <h3>Instalación de Equipos</h3>
+      <p>Montaje e instalación correcta de maquinaria y equipos para garantizar su funcionamiento óptimo.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📋</span>
+      <h3>Diagnóstico Técnico</h3>
+      <p>Evaluación profesional del estado de tus equipos con reporte detallado y recomendaciones.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🚗</span>
+      <h3>Servicio a Domicilio</h3>
+      <p>Nos desplazamos hasta tu ubicación para brindarte atención técnica sin que tengas que mover tus equipos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ NOSOTROS -->
+<section id="nosotros">
+  <div class="why-grid">
+    <div class="why-visual">
+      <div class="big-icon">🔧</div>
+      <p>MÁS DE 10 AÑOS<br>DE CONFIANZA</p>
+    </div>
+    <div>
+      <p class="section-eyebrow">¿Por qué elegirnos?</p>
+      <h2 class="section-title">Técnicos con experiencia real</h2>
+      <ul class="why-list">
+        <li>
+          <div class="why-check">✓</div>
+          <div>
+            <h4>Personal certificado</h4>
+            <p>Nuestros técnicos cuentan con formación y experiencia comprobada en el área.</p>
+          </div>
+        </li>
+        <li>
+          <div class="why-check">✓</div>
+          <div>
+            <h4>Garantía en el trabajo</h4>
+            <p>Respaldamos cada reparación con garantía para tu tranquilidad.</p>
+          </div>
+        </li>
+        <li>
+          <div class="why-check">✓</div>
+          <div>
+            <h4>Precios transparentes</h4>
+            <p>Te damos presupuesto sin compromiso antes de iniciar cualquier trabajo.</p>
+          </div>
+        </li>
+        <li>
+          <div class="why-check">✓</div>
+          <div>
+            <h4>Atención personalizada</h4>
+            <p>Te asesoramos y acompañamos durante todo el proceso de reparación.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <p class="section-eyebrow">Cómo trabajamos</p>
+  <h2 class="section-title">Proceso Simple y Transparente</h2>
+  <p class="section-sub">En 4 pasos resolvemos tu problema técnico.</p>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Contacto inicial</h3>
+      <p>Escríbenos por WhatsApp o llena el formulario. Respondemos en menos de 24 horas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Diagnóstico</h3>
+      <p>Evaluamos el equipo y te explicamos el problema con claridad antes de cualquier acción.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Presupuesto</h3>
+      <p>Te damos el costo exacto. Sin sorpresas. Tú decides si continuar o no.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Reparación y entrega</h3>
+      <p>Ejecutamos el trabajo con calidad y te entregamos el equipo funcionando con garantía.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <p class="section-eyebrow">Hablemos</p>
+  <h2 class="section-title">Contáctanos Hoy</h2>
+  <p class="section-sub">Estamos listos para atenderte. Elige el canal que prefieras.</p>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <h3>Información de contacto</h3>
+      <p>Respondemos rápido y con gusto te ayudamos a resolver tu problema técnico.</p>
+
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div>
+          <strong>WhatsApp</strong>
+          <span>+591 6020-4287</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <strong>Horario de atención</strong>
+          <span>Lunes a Sábado · 9:00 AM – 9:00 PM</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <strong>Ubicación</strong>
+          <span>Calle Rodolfo Arauz · Bolivia</span>
+        </div>
+      </div>
+
+      <br>
+      <a href="https://wa.me/59160204287" target="_blank" class="btn-primary" style="display:inline-flex; margin-top:.5rem;">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.554 4.107 1.523 5.838L.057 23.854a.5.5 0 0 0 .612.612l5.993-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.001-1.373l-.36-.213-3.724.907.936-3.617-.234-.374A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+
+    <div class="contact-form">
+      <h3>Envíanos un mensaje</h3>
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" placeholder="Tu nombre" />
+      </div>
+      <div class="form-group">
+        <label>Número de teléfono</label>
+        <input type="tel" placeholder="+591 0000-0000" />
+      </div>
+      <div class="form-group">
+        <label>Servicio que necesitas</label>
+        <select>
+          <option value="">Selecciona un servicio</option>
+          <option>Mantenimiento Preventivo</option>
+          <option>Reparación General</option>
+          <option>Revisión Eléctrica</option>
+          <option>Instalación de Equipos</option>
+          <option>Diagnóstico Técnico</option>
+          <option>Servicio a Domicilio</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Descripción del problema</label>
+        <textarea placeholder="Describe brevemente el problema o servicio que necesitas..."></textarea>
+      </div>
+      <button class="btn-form" onclick="enviarWhatsApp()">📲 Enviar por WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2024 <span>Taller San Vicente</span> · Todos los derechos reservados · Guatemala</p>
+  <p style="margin-top:.4rem;">Servicios técnicos de confianza · WhatsApp: +591 6020-4287</p>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/59160204287" target="_blank" class="whatsapp-float" title="Chatear por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.119.554 4.107 1.523 5.838L.057 23.854a.5.5 0 0 0 .612.612l5.993-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.001-1.373l-.36-.213-3.724.907.936-3.617-.234-.374A9.818 9.818 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+  </svg>
+  Escríbenos
+</a>
+
+<script>
+  function enviarWhatsApp() {
+    const nombre = document.querySelector('input[type="text"]').value.trim();
+    const telefono = document.querySelector('input[type="tel"]').value.trim();
+    const servicio = document.querySelector('select').value;
+    const descripcion = document.querySelector('textarea').value.trim();
+
+    if (!nombre || !servicio) {
+      alert('Por favor completa tu nombre y selecciona un servicio.');
+      return;
+    }
+
+    const msg = `Hola, soy *${nombre}*.\nNecesito: *${servicio}*\n${descripcion ? 'Descripción: ' + descripcion : ''}\nTeléfono: ${telefono || 'No indicado'}`;
+    const url = `https://wa.me/59160204287?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+</script>
+
+</body>
+</html>
